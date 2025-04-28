@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>咋俩试试</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .input-area {
+            margin: 20px 0;
+        }
+        input {
+            padding: 10px;
+            width: 70%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 30px;
+            font-size: 24px;
+            min-height: 50px;
+            color: #e91e63;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>在下方输入框中输入"咋俩试试"看看会发生什么</h1>
+        
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="请输入...">
+            <button onclick="checkInput()">确定</button>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // 表情包图片数组
+        const memeImages = [
+            'images/meme1.jpg',
+            'images/meme2.jpg',
+            'images/meme3.jpg',
+            'images/meme4.jpg',
+            'images/meme5.jpg',
+            // 可以根据需要添加更多图片
+        ];
+
+        function checkInput() {
+            const input = document.getElementById('userInput').value.trim();
+            const resultElement = document.getElementById('result');
+            
+            if (input === "咋俩试试") {
+                // 生成0到10000之间的随机数
+                const random = Math.floor(Math.random() * 10000);
+                let result = "";
+                
+                // 清除之前的内容
+                resultElement.innerHTML = '';
+                
+                // 根据概率分配结果
+                if (random < 5000) { // 50%
+                    // 随机选择一张表情包图片
+                    const randomImageIndex = Math.floor(Math.random() * memeImages.length);
+                    const img = document.createElement('img');
+                    img.src = memeImages[randomImageIndex];
+                    img.style.maxWidth = '100%';
+                    img.style.borderRadius = '8px';
+                    resultElement.appendChild(img);
+                } else if (random < 8000) { // 30%
+                    result = "喵喵喵？";
+                    resultElement.textContent = result;
+                } else if (random < 9000) { // 10%
+                    result = "杂鱼~♡ 杂鱼~♡";
+                    resultElement.textContent = result;
+                } else if (random < 9800) { // 8%
+                    result = "下次一定";
+                    resultElement.textContent = result;
+                } else if (random < 9950) { // 1.5%
+                    result = "真的可以嘛？！";
+                    resultElement.textContent = result;
+                } else if (random < 9975) { // 0.25%
+                    result = "我也喜欢你";
+                    resultElement.textContent = result;
+                } else if (random < 9995) { // 0.2%
+                    result = "好哦宝宝";
+                    resultElement.textContent = result;
+                } else if (random < 9995 + 304) { // 3.04%
+                    result = "宝宝想和你做爱";
+                    resultElement.textContent = result;
+                } else { // 0.6101%
+                    result = "宝宝乖乖躺好♡";
+                    resultElement.textContent = result;
+                }
+            } else {
+                resultElement.textContent = "请输入咋俩试试";
+            }
+        }
+        
+        // 添加回车键触发功能
+        document.getElementById('userInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkInput();
+            }
+        });
+    </script>
+</body>
+</html>
