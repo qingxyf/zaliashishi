@@ -62,7 +62,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>在下方输入框中输入"咱俩试试"看看会发生什么</h1>
+        <h1>🎉❤五一脱单攻略❤🎉
+
+            点击我头像👆🏻
+            编辑发送“咱俩试试？”💌
+            即有机会获得"“添加失败”.“滚你妈的”💕or“好呀宝宝”💕
+            
+            ⭕兑奖日期:4月15日—5月1日</h1>
         
         <div class="input-area">
             <input type="text" id="userInput" placeholder="请输入...">
@@ -96,7 +102,7 @@
                 resultElement.innerHTML = '';
                 
                 // 根据概率分配结果
-                if (random < 5000) { // 50%
+                if (random < 3000) { // 30%
                     // 随机选择一张表情包图片
                     const randomImageIndex = Math.floor(Math.random() * memeImages.length);
                     const img = document.createElement('img');
@@ -104,14 +110,26 @@
                     img.style.maxWidth = '100%';
                     img.style.borderRadius = '8px';
                     resultElement.appendChild(img);
-                } else if (random < 8000) { // 30%
+                } else if (random < 6000) { // 30%
                     result = "喵喵喵？";
                     resultElement.textContent = result;
-                } else if (random < 9000) { // 10%
+                } else if (random < 7000) { // 10%
                     result = "杂鱼~♡ 杂鱼~♡";
                     resultElement.textContent = result;
-                } else if (random < 9800) { // 8%
+                } else if (random < 7800) { // 8%
                     result = "下次一定";
+                    resultElement.textContent = result;
+                } else if (random < 8300) { // 5%
+                    result = "但是我拒绝";
+                    resultElement.textContent = result;
+                } else if (random < 8800) { // 5%
+                    result = "你没生病吧";
+                    resultElement.textContent = result;
+                } else if (random < 9300) { // 5%
+                    result = "你不会是喜欢我吧~";
+                    resultElement.textContent = result;
+                } else if (random < 9800) { // 5%
+                    result = "不好意思我有约了";
                     resultElement.textContent = result;
                 } else if (random < 9950) { // 1.5%
                     result = "真的可以嘛？！";
@@ -122,10 +140,10 @@
                 } else if (random < 9995) { // 0.2%
                     result = "好哦宝宝";
                     resultElement.textContent = result;
-                } else if (random < 9995 + 304) { // 3.04%
+                } else if (random < 9995 + 304) { // 0.304% (调整为总计10000)
                     result = "宝宝想和你做爱";
                     resultElement.textContent = result;
-                } else { // 0.6101%
+                } else { // 0.101%
                     result = "宝宝乖乖躺好♡";
                     resultElement.textContent = result;
                 }
