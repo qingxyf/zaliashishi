@@ -15,6 +15,7 @@
             margin: 0;
             background-color: #f5f5f5;
             text-align: center;
+            position: relative;
         }
         .container {
             background-color: white;
@@ -23,6 +24,59 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 500px;
             width: 90%;
+        }
+        
+        /* 添加概率展示按钮样式 */
+        .prob-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 15px;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 100;
+        }
+        .prob-btn:hover {
+            background-color: #f57c00;
+        }
+        
+        /* 概率弹窗样式 */
+        .prob-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+        }
+        .prob-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 80%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .prob-close {
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .prob-item {
+            margin: 10px 0;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
         }
         h1 {
             color: #333;
@@ -58,9 +112,55 @@
             color: #e91e63;
             font-weight: bold;
         }
+        
+        /* 添加彩色渐变循环效果 */
+        .rainbow-text {
+            background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rainbow 6s linear infinite;
+            background-size: 200% 100%;
+        }
+        
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 添加概率展示按钮 -->
+    <button class="prob-btn" onclick="toggleProbModal()">概率展示</button>
+    
+    <!-- 添加概率弹窗 -->
+    <div id="probModal" class="prob-modal">
+        <div class="prob-content">
+            <span class="prob-close" onclick="toggleProbModal()">&times;</span>
+            <h2>回复概率分布</h2>
+            <div class="prob-item"><span>表情包：</span><span>30%</span></div>
+            <div class="prob-item"><span>喵喵喵？：</span><span>20%</span></div>
+            <div class="prob-item"><span>杂鱼~♡ 杂鱼~♡：</span><span>10%</span></div>
+            <div class="prob-item"><span>下次一定：</span><span>8%</span></div>
+            <div class="prob-item"><span>但是我拒绝：</span><span>5%</span></div>
+            <div class="prob-item"><span>你没生病吧：</span><span>5%</span></div>
+            <div class="prob-item"><span>你不会是喜欢我吧~：</span><span>5%</span></div>
+            <div class="prob-item"><span>不好意思我有约了：</span><span>5%</span></div>
+            <div class="prob-item"><span>发送失败，请先添加好友：</span><span>5%</span></div>
+            <div class="prob-item"><span>我们要一直在一起哦：</span><span>1%</span></div>
+            <div class="prob-item"><span>一起去看烟火吧~：</span><span>1%</span></div>
+            <div class="prob-item"><span>君不负我，我不负君：</span><span>1%</span></div>
+            <div class="prob-item"><span>直接登记结婚吧♡：</span><span>1%</span></div>
+            <div class="prob-item"><span>笨蛋，才不是喜欢你才答应你的：</span><span>1%</span></div>
+            <div class="prob-item"><span>真的可以嘛？！：</span><span>1.5%</span></div>
+            <div class="prob-item"><span>还有小概率机会出现隐藏回复哦~♡</span><span>？？？%</span></div>
+        </div>
+    </div>
+
     <div class="container">
         <h1>🎉❤五一脱单攻略❤🎉
 
@@ -86,14 +186,30 @@
             'images/meme3.jpg',
             'images/meme4.jpg',
             'images/meme5.jpg',
+            'images/meme6.jpg',
+            'images/meme7.jpg',
+            'images/meme8.jpg',
             // 可以根据需要添加更多图片
         ];
+
+        // 添加概率弹窗控制函数
+        function toggleProbModal() {
+            const modal = document.getElementById('probModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+            }
+        }
 
         function checkInput() {
             const input = document.getElementById('userInput').value.trim();
             const resultElement = document.getElementById('result');
             
-            if (input === "咱俩试试") {
+            // 先移除彩色渐变效果，确保每次都是从头开始设置
+            resultElement.classList.remove('rainbow-text');
+            
+            if (input === "咱俩试试"||input === "咱俩试试？") {
                 // 生成0到10000之间的随机数
                 const random = Math.floor(Math.random() * 10000);
                 let result = "";
@@ -110,26 +226,45 @@
                     img.style.maxWidth = '100%';
                     img.style.borderRadius = '8px';
                     resultElement.appendChild(img);
-                } else if (random < 6000) { // 30%
+                } else if (random < 5000) { // 20% (降低10%)
                     result = "喵喵喵？";
                     resultElement.textContent = result;
-                } else if (random < 7000) { // 10%
+                } 
+                else if (random < 6000) { // 10%
                     result = "杂鱼~♡ 杂鱼~♡";
                     resultElement.textContent = result;
-                } else if (random < 7800) { // 8%
+                } else if (random < 6800) { // 8%
                     result = "下次一定";
                     resultElement.textContent = result;
-                } else if (random < 8300) { // 5%
+                } else if (random < 7300) { // 5%
                     result = "但是我拒绝";
                     resultElement.textContent = result;
-                } else if (random < 8800) { // 5%
+                } else if (random < 7800) { // 5%
                     result = "你没生病吧";
                     resultElement.textContent = result;
-                } else if (random < 9300) { // 5%
+                } else if (random < 8300) { // 5%
                     result = "你不会是喜欢我吧~";
                     resultElement.textContent = result;
-                } else if (random < 9800) { // 5%
+                } else if (random < 8800) { // 5%
                     result = "不好意思我有约了";
+                    resultElement.textContent = result;
+                } else if (random < 9300) { // 5% (新增)
+                    result = "发送失败，请先添加好友";
+                    resultElement.textContent = result;
+                } else if (random < 9400) { // 1% (新增)
+                    result = "我们要一直在一起哦";
+                    resultElement.textContent = result;
+                } else if (random < 9500) { // 1% (新增)
+                    result = "一起去看烟火吧~";
+                    resultElement.textContent = result;
+                } else if (random < 9600) { // 1% (新增)
+                    result = "君不负我，我不负君";
+                    resultElement.textContent = result;
+                } else if (random < 9700) { // 1% (新增)
+                    result = "直接登记结婚吧♡";
+                    resultElement.textContent = result;
+                } else if (random < 9800) { // 1% (新增)
+                    result = "笨蛋，才不是喜欢你才答应你的";
                     resultElement.textContent = result;
                 } else if (random < 9950) { // 1.5%
                     result = "真的可以嘛？！";
@@ -137,19 +272,42 @@
                 } else if (random < 9975) { // 0.25%
                     result = "我也喜欢你";
                     resultElement.textContent = result;
+                    resultElement.classList.add('rainbow-text'); // 添加彩色渐变效果
                 } else if (random < 9995) { // 0.2%
                     result = "好哦宝宝";
                     resultElement.textContent = result;
-                } else if (random < 9995 + 304) { // 0.304% (调整为总计10000)
+                    resultElement.classList.add('rainbow-text'); // 添加彩色渐变效果
+                } else if (random < 9995 + 104) { // 0.104%
                     result = "宝宝想和你做爱";
                     resultElement.textContent = result;
-                } else { // 0.101%
+                    resultElement.classList.add('rainbow-text'); // 添加彩色渐变效果
+                } else if (random < 9995 + 104 + 101) { // 0.101%
                     result = "宝宝乖乖躺好♡";
                     resultElement.textContent = result;
+                    resultElement.classList.add('rainbow-text'); // 添加彩色渐变效果
+                } else if (random < 9995 + 104 + 101 + 100) { // 0.1%
+                    result = "（你被扑倒了，温软的吐息传入你的耳中~......）";
+                    resultElement.textContent = result;
+                    resultElement.classList.add('rainbow-text'); // 添加彩色渐变效果
+                } else { // 0.1%
+                    result = "你自己说的，可别~后悔啊~♡";
+                    resultElement.textContent = result;
+                    resultElement.classList.add('rainbow-text'); // 添加彩色渐变效果
                 }
             } else {
                 resultElement.textContent = "请输入咱俩试试";
             }
+            
+            // 删除这段有问题的代码
+            /*
+            if (input === "咱俩试试" || input === "咱俩试试？") {
+                if (random < 9975) {
+                    resultElement.classList.remove('rainbow-text');
+                }
+            } else {
+                resultElement.classList.remove('rainbow-text');
+            }
+            */
         }
         
         // 添加回车键触发功能
